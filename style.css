@@ -1,0 +1,219 @@
+/*
+ Theme Name:   Histology What?
+ Theme URI:    http://
+ Description:  WP-Bootstrap Child Theme for something or another
+ Author:       Tom Woodward
+ Author URI:   http://bionicteaching.com
+ Template:     wp-bootstrap
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         light, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  boot-boot-boot
+*/
+
+a {
+	color:#BE3F21;
+}
+
+a:hover {
+	background-color: #f8f8f8;
+	color: #000;
+}
+
+.response p, .response p a{
+	color:black;
+	text-decoration: none;
+}
+
+#content {
+  border: 2px solid #424242;
+}
+
+
+.page-header{
+	padding-bottom: 5px;
+    margin: 20px 0 20px;
+    border-bottom: 1px solid #eee;
+    padding-left: 20px;
+    padding-top: 5px;
+}
+
+.page-header h1{
+    padding: 0px;
+    font-weight: 200;
+    margin: -15px 0 0 0;
+    font-size: 30px;
+
+}
+
+
+.response {
+	display: inline-block;
+    width: 100%;
+    border: 1px solid #efefef;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 5px 5px 5px 10px;
+}
+
+.response:hover {
+	background-color: #efefef;
+} 
+
+
+.banner {
+    position: relative;
+    height:250px;
+    margin-bottom: 55px;
+
+}
+.banner img {
+    display: block;
+    width: 100%;
+    max-width: 1200px; /* corresponds to max height of 450px */
+    margin: 0 auto;
+}
+
+.navbar .container, .collapse, .navbar-collapse, .navbar-responsive-collapse, .navbar, .navbar-default, .navbar-fixed-top {
+	background-color: ##f8f8f8;
+}
+
+#sidebar1 {
+	margin-top: 20px;
+}
+
+.btn-success {
+    color: #000;
+    background-color: #f8f8f8;
+    border-color: #efefef;
+   }
+
+ .btn-success:hover{
+ 	background-color: #efefef;
+ 	color: #000;
+ 	border-color: #f8f8f8;
+ }
+
+/*
+category list plugin styling 
+*/
+
+.listing-item {
+	display: inline-block;
+    width: 100%;
+    border: 1px solid #BE3F21;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 5px 5px 5px 10px;
+}
+
+.listing-item .title {
+	text-decoration: none;
+	font-size: 1.4em;
+	font-weight: 500;
+}
+
+.listing-item img {
+	display: inline-block;
+	float:left;
+	padding: 5px 10px 5px 5px;
+}
+
+@media(max-width:767px){
+    .listing-item {
+    display: inline-block;
+    width: 100%;
+    border: 2px solid #BE3F21;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 5px 5px 5px 10px;
+}
+
+}
+
+footer {
+    display: none;
+}
+
+/*switcher specific css */
+a.button {
+  display:block;
+  width:150px;
+  height:40px;
+  background-color:#424242;
+  color:#fff;
+  line-height:50px;
+  text-align:center;
+  text-decoration: none;
+  margin: 1px;
+}
+
+a.active {
+  background-color:red;
+}
+
+.hist-slides {  
+    width: 100%;
+    display: inline-block;
+}
+
+.subcontent {
+  margin-top:10px;
+}
+
+.hist-slides h3 {
+  margin-top: -20px;
+  font-weight: 200;
+  border-bottom: 1px solid #efefef;
+  padding-bottom: 5px;
+}
+
+div[class*="subcontent-"] { 
+  display:none;
+}
+
+div.active { 
+  display:block;
+}
+
+.button-wrap {
+    margin-top: 90px;
+    background-color: #efefef;
+}
+
+
+/*breadcrumbs*/
+.item-parent, .item-current {
+  display: inline-block;
+}
+
+
+/*menu under the slides*/
+
+.cell-topics {
+  text-align:center;
+  display:flex;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.cell-topics ul {
+  margin: auto;
+}
+
+.cell-topics ul li{
+  border: 1px solid black;
+  display: inline-block;
+  padding: 3px 8px;
+  align-items: center;
+  list-style-type: none;
+
+}
+
+.cell-topics .current_page_item {
+  background-color: #efefef;
+}
