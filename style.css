@@ -26,6 +26,10 @@ body {
     background-color: #424242;
 }
 
+header {
+    margin-left: 11px;
+}
+
 .response p,
 .response p a {
     color: black;
@@ -224,7 +228,7 @@ category list plugin styling
 }
 #wp-slide,
 .subslide {
-    height: 645px;
+    height: 700px;
     border: 10px solid #fff;
     background-color: #fff;
     background-position: center;
@@ -234,29 +238,30 @@ category list plugin styling
 }
 .navigation {
     margin-top: -34px;
-    margin-left: 90px;
+    margin-left: 10px;
 }
 
 .nav-arrow {
-  margin-top: 5px;
+  margin-top: 4px;
   padding: 2px;
-  border-top: 1px solid #bfbfbf;  
+  border-top: 1px solid rgb(226, 226, 226);  
   background-color: #efefef;
   text-align: center; 
-  transition:background-color .2s,color .2s,border .2s;
+  transition: .2s;
 }
 
 #nav-arrow-left{
-  border-right: 1px solid #bfbfbf;
+  border-right: 1px solid rgb(226, 226, 226);
 }
 
 #nav-arrow-right{
-  border-left: 1px solid #bfbfbf;
+  border-left: 1px solid rgb(226, 226, 226);
 }
 
 .nav-arrow:hover, .nav-arrow a:hover{
  background-color: #424242;
  color: #fff;
+ padding-left: 4px;
 }
 
 #main article #nav-arrow-right img,
@@ -284,7 +289,7 @@ footer {
 /*switcher specific css */
 a.button {
     display: block;
-    width: 150px;
+    width: 250px;
     height: 40px;
     background-color: #fff;
     color: #424242;
@@ -293,6 +298,7 @@ a.button {
     text-decoration: none;
     border: 2px solid #424242;
     margin-bottom: -2px;
+    font-size: 1.3em;
 }
 a.button:hover {
     background-color: #efefef;
@@ -305,7 +311,7 @@ a.active {
 .hist-slides {
     width: 100%;
     display: inline-block;
-    margin-left: 90px;
+    margin-left: 10px;
 }
 .subcontent {
     margin-top: 10px;
@@ -394,6 +400,7 @@ i {
 .total-pages {
     text-align: center;
     padding-top: 5px;
+    font-weight: 100;
 }
 
 /* MAIN INDEX CSS */
@@ -401,9 +408,15 @@ i {
 .cell-main-index {
     font-family: 'Overpass', sans-serif;
     font-size: 1.2em;
-    width: 100%;
     margin: auto;
+    display: block;
 }
+
+.major-section {
+    width: 100%;
+    display: block;
+}
+
 .cell-main-index a {
     text-decoration: none;
     color: #424242;
@@ -417,11 +430,11 @@ i {
 .cell-main-index ul.children li {
     margin-top: 6px;
 }
-.cell-main-index ul.children ul.children {
+.cell-main-index ul.children, .cell-main-index ul.children ul.children {
     display: none;
     padding: 10px;
-    margin-left: 145px;
-    margin-top: -33px;
+    margin-left: 125px;
+    margin-top: -20px;
     position: absolute;
     float: right;
     background-color: #fff;
@@ -436,27 +449,9 @@ i {
 }
 .cell-main-index ul.children ul.children.active,
 .cell-main-index ul.children.active {
-    display: block;
+    display: inline-flex;
 }
-.cell-main-index .main-header {
-    background-color: #efefef;
-    margin: 0;
-    padding: 0;
-    width: 80%;
-    list-style-type: none;
-    font-size: 1.2em;
-    text-decoration: none;
-    height: 60px;
-}
-.cell-main-index .main-header li {
-    border-bottom: 2px solid #BE3F21;
-    margin-left: 300px;
-    margin-top: -60px;
-}
-.cell-main-index .children {
-    font-size: .9em;
-    margin: 5px;
-}
+
 .cell-main-index .active {
     background-color: #fff;
     padding: 5px;

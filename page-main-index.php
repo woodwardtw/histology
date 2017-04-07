@@ -16,70 +16,35 @@ Template Name: Main Index for Histology
 						
 						<header>
 							
-							<div class="page-header"><h1><?php the_title(); ?></h1></div>
-													<?php echo custom_breadcrumbs(); ?>
+							<!--<div class="page-header"><h1><?php the_title(); ?></h1></div>
+													<?php echo custom_breadcrumbs(); ?>-->
 
 							
 						</header> <!-- end article header -->
 						<section class="post_content">
 						<div class="hist-slides">
 							<div class="subcontent col-md-10">
-								<div class="subcontent-1 subslide active"><?php the_content(); ?></div>
-						<!--SLIDES BEGIN-->
-						<?php 						
-						if( have_rows('histo_slide') ): 
-							$count = 1;
-						    $menu = ["Blank Slide"];
-							?>
+								<div class="active"><?php the_content(); ?></div>
+						<!--SUB PAGES MENU-->
+						<div class="col-md-4">		
+						        <h2>Cells</h2>
+									<?php echo '<div class="cell-main-index cells col-md-12"><ul>';?>
+									<?php echo makeMenu(53);?>	
+									</ul>
+									</div>	
+
+								<h2>Tissues</h2>	
+									<?php echo '<div class="cell-main-index tissues col-md-12"><ul>';?>
+									<?php echo makeMenu(178);?>	
+									</ul>
+									</div>	
+
+								<h2>Organs & Systems</h2>		
+									<?php echo '<div class="cell-main-index organs col-md-12"><ul>';?>
+									<?php echo makeMenu(181);?>		
+									</ul>
+								</div>	
 						
-								<?php while( have_rows('histo_slide') ): the_row(); 
-
-									// vars
-									$image = get_sub_field('slide_url');
-									$content = get_sub_field('slide_text');
-									$title = get_sub_field('slide_title');
-									$count = $count+1;
-									array_push($menu,$title);
-									?>
-
-
-									 <div class="subcontent-<?php echo $count;?> subslide">
-										<?php echo $image; ?>
-										<?php if( $title ): ?>
-											<h3><?php echo $title; ?></h3>
-										<?php endif; ?>											
-
-										<?php if( $content ): ?>								
-			
-									    <?php echo $content;?>
-									<?php endif;?>
-									</div>
-								<?php endwhile; ?>
-
-							</div>
-							
-						</div>
-						<div class="col-md-10">
-						
-					<?php endif; ?>
-<!--SUB PAGES MENU-->
-						<?php if( have_rows('histo_slide')) {
-								echo '<div class="cell-topics-main">';
-							} else {
-								echo '<div class="cell-topics-list">';
-								} ?>
-							<ul>
-							 <?php				
-								$post_id = get_the_ID();
-								//$ancestor_id = get_ancestors($post_id,'page', 'post_type');
-								wp_list_pages( array(
-								'title_li'    => '',
-								//'child_of'    => $ancestor_id,
-								) );
-							?>
-							</ul>
-						</div>	
-
 						</div>
 
 						</section> <!-- end article section -->

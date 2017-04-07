@@ -22,7 +22,7 @@ Template Name: Big Page
 						
 						<section class="post_content row">
 							<div class="hist-slides">
-								<div class="subcontent col-md-8">
+								<div class="subcontent col-md-9">
 									<?php if ( have_rows('histo_slide') ) : ?>	
 									<!--regular post content-->	
 										<div class="subcontent-1 subslide active"  <?php get_post_background_img ($post)?>>
@@ -75,7 +75,7 @@ Template Name: Big Page
 									<?php endwhile; ?>	
 								</div>
 <!--SLIDE NATIGATION MENU-->
-							<div class="button-wrap col-md-2">
+							<div class="button-wrap col-md-3">
 								 <?php  
 								 $length = count($menu);
 								 $i = 0;
