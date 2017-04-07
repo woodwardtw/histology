@@ -41,6 +41,14 @@ if(!function_exists('load_my_script')){
 }
 add_action('wp_enqueue_scripts', 'load_my_script');
 
+// Load Font Awesome
+add_action( 'wp_enqueue_scripts', 'enqueue_font_awesome' );
+function enqueue_font_awesome() {
+
+    wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' );
+
+}
+
 // Breadcrumbs via https://www.thewebtaylor.com/articles/wordpress-creating-breadcrumbs-without-a-plugin
 
 function custom_breadcrumbs(){
@@ -55,21 +63,130 @@ function custom_breadcrumbs(){
                    
                 // Parent page loop
                 if ( !isset( $parents ) ) $parents = null;
+                $parents .= '<span class="item-parent"><a class="bread-parent" href="/histology">Main Menu</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> </span> ';
                 foreach ( $anc as $ancestor ) {
-                    $parents .= '<div class="item-parent item-parent-' . $ancestor . '"><a class="bread-parent bread-parent-' . $ancestor . '" href="' . get_permalink($ancestor) . '" title="' . get_the_title($ancestor) . '">' . get_the_title($ancestor) . '</a></div';
-                    $parents .= '<div class="separator separator-' . $ancestor . '"> >> </div>';
+                    $parents .= '<span class="item-parent item-parent-' . $ancestor . '"><a class="bread-parent bread-parent-' . $ancestor . '" href="' . get_permalink($ancestor) . '" title="' . get_the_title($ancestor) . '">' . get_the_title($ancestor) . '</a></span>';
+                    $parents .= '<span class="separator separator-' . $ancestor . '"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> </span>';
                 }
                    
                 // Display parent pages
                 echo $parents;
                    
                 // Current page
-                echo '<div class="item-current item-' . $post->ID . '"><strong title="' . get_the_title() . '"> ' . get_the_title() . '</strong></div>';
+                echo '<span class="item-current item-' . $post->ID . '"><strong title="' . get_the_title() . '"> ' . get_the_title() . '</strong></span>';
                    
             } else {
                    
                 // Just display current page if not parents
-                echo '<div class="item-current item-' . $post->ID . '"><strong class="bread-current bread-' . $post->ID . '"> ' . get_the_title() . '</strong></div>';
+                echo '<span class="item-current item-' . $post->ID . '"><strong class="bread-current bread-' . $post->ID . '"> ' . get_the_title() . '</strong></span>';
                    
             }
     }
+
+    //background image setter
+function get_post_background_img ($post) {
+  if ( $thumbnail_id = get_post_thumbnail_id($post) ) {
+        if ( $image_src = wp_get_attachment_image_src( $thumbnail_id, 'full-size' ) )
+            printf( ' style="background-image: url(%s);"', $image_src[0] );     
+    }
+}            
+
+
+//next and prev pagination for pages from https://codex.wordpress.org/Next_and_Previous_Links#The_Next_and_Previous_Pages
+
+function getPrevNext(){
+
+$post_id = get_the_ID();
+$ancestor_id = get_ancestors($post_id,'page', 'post_type')[0];
+$pagelist = get_pages( array(
+ 'parent'=> $ancestor_id,
+  ) );
+  $page_num =sizeof($pagelist);
+
+//    $pagelist = get_pages('sort_column=menu_order&sort_order=asc&child_of'.$ancestor_id);
+    $pages = array();
+    foreach ($pagelist as $page) {
+       $pages[] += $page->ID;
+    }
+
+    $current = array_search(get_the_ID(), $pages);
+    $prevID = $pages[$current-1];
+    $nextID = $pages[$current+1];
+    
+    echo '<div class="navigation col-md-8 col-md-offset-2">';
+    
+    if (!empty($prevID)) {
+        echo '<a href="';
+        echo get_permalink($prevID);
+        echo '" ';
+        echo 'title="';
+        echo get_the_title($prevID); 
+        echo'"><div class="col-md-5 nav-arrow" id="nav-arrow-left"><img src="'.get_stylesheet_directory_uri().'/imgs/arrow_left.svg" > PREV';
+        echo '</div>';
+        echo '</a>';
+    }
+    
+    if (empty($prevID)){
+        echo '<div class="col-md-5 nav-arrow-empty" id="nav-arrow-left"></div>';
+    }
+    echo '<div class="total-pages col-md-2">'.($current+1) . ' of ' . $page_num . '</div>';
+    if (!empty($nextID)) {
+       
+        echo '<a href="';
+        echo get_permalink($nextID);
+        echo '"';
+        echo 'title="';
+        echo get_the_title($nextID); 
+        echo'"><div class="col-md-5 nav-arrow" id="nav-arrow-right">NEXT <img src="'.get_stylesheet_directory_uri().'/imgs/arrow_right.svg" ></div></a>';
+       
+    }
+}   
+
+
+//true false for slide navigation 
+function subTrue ($fieldName){
+    if (get_sub_field($fieldName)){
+        return '<i class="fa fa-angle-double-right" aria-hidden="true"></i>';
+    }
+}
+
+function remove_my_parent_theme_function() {
+    remove_filter('the_content', 'wp_bootstrap_first_paragraph');
+}
+add_action('wp_loaded', 'remove_my_parent_theme_function');
+
+
+//main menu construction
+
+
+function makeMenu($parent = 0, $the_class ='main-header') {
+         $args = array(
+                        'sort_order' => 'asc',
+                        'sort_column' => 'post_title',                      
+                        'parent' => $parent,                      
+                        'post_type' => 'page',
+                        'post_status' => 'publish',
+                        'sort_column'  => 'menu_order'
+                    ); 
+                    $pages = get_pages($args); 
+                    $number = sizeof($pages);
+                    $i = 0;
+                    while ($i < $number){
+                        echo '<li class="'.$the_class. ' parent'. $parent .'"><a href="'.$pages[$i]->guid.'">'.$pages[$i]->post_title .'</a>';
+                        $parent_id = $pages[$i]->ID;
+                        if (get_pages(array('child_of'=> $parent_id))) {
+                        echo '<ul class="children parent'.$parent_id.'">';
+                        makeMenu($parent_id, 'page-item'); 
+                        echo '</ul>';
+                    }
+                    echo '</li>';
+                        $i++;
+                    }
+                    
+                }
+
+function main_slide_title($id){
+    if(get_field('main_slide_title', $id)){
+        return get_field('main_slide_title', $id);
+    }
+}                

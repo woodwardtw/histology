@@ -8,7 +8,7 @@ Template Name: Big Page
 			
 			<div id="content" class="clearfix row">
 			
-				<div id="main" class="col col-lg-12 clearfix" role="main">
+				<div id="main" class="col col-lg-12 clearfix center" role="main">
 
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 					
@@ -16,47 +16,65 @@ Template Name: Big Page
 						
 						<header>
 							
-							<div class="page-header"><h1><?php the_title(); ?></h1></div>
-													<?php echo custom_breadcrumbs(); ?>
-
+						<?php echo custom_breadcrumbs(); ?>
 							
 						</header> <!-- end article header -->
-						<section class="post_content">
-						<div class="hist-slides">
-							<div class="subcontent col-md-10">
-								<div class="subcontent-1 subslide active"><?php the_content(); ?></div>
-						<!--SLIDES BEGIN-->
-						<?php 						
-						if( have_rows('histo_slide') ): 
-							$count = 1;
-						    $menu = ["Blank Slide"];
-							?>
 						
-								<?php while( have_rows('histo_slide') ): the_row(); 
-
-									// vars
-									$image = get_sub_field('slide_url');
-									$content = get_sub_field('slide_text');
-									$title = get_sub_field('slide_title');
-									$count = $count+1;
-									array_push($menu,$title);
+						<section class="post_content row">
+							<div class="hist-slides">
+								<div class="subcontent col-md-8">
+									<?php if ( have_rows('histo_slide') ) : ?>	
+									<!--regular post content-->	
+										<div class="subcontent-1 subslide active"  <?php get_post_background_img ($post)?>>
+											<img src="<?php echo get_stylesheet_directory_uri()."/imgs/trans.png"; ?>">
+											<h3 class="slide-title"><?php echo main_slide_title(); ?></h3>
+											<?php the_content(); ?>
+										</div>
+									<?php else :?>
+										<div class="subcontent-1  active">
+											<?php the_content(); ?>
+										</div>
+									<?php endif ?>
+								
+								<!--SLIDES BEGIN aka custom fields data-->
+									<?php 						
+									   if( have_rows('histo_slide') ): 
+										$count = 1;
+									    $menu = ['Main Slide'];
 									?>
+									
+									<?php while( have_rows('histo_slide') ): the_row(); 
 
-
-									 <div class="subcontent-<?php echo $count;?> subslide">
-										<?php echo $image; ?>
-										<?php if( $title ): ?>
-											<h3><?php echo $title; ?></h3>
-										<?php endif; ?>											
-
+										// vars
+										$image = get_sub_field('slide_url');
+										$content = get_sub_field('slide_text');
+										$title = get_sub_field('slide_title');
+										//$contentTrue = subTrue('slide_text');
+										$count = $count+1;
+										if ($title != ' '){
+										array_push($menu,$title.$contentTrue);
+										}
+									?>
+									<div class="subcontent-<?php echo $count;?> subslide" <?php get_post_background_img ($post)?>>
+										<img src="<?php echo $image[url]; ?>">
+										<?php if( $title ): ?>											
+											<h3 class="slide-title">
+												<?php echo $title; ?>
+											</h3>
+										<?php else: ?>
+											<!--slide title-->
+											<h3 class="slide-title">												
+											</h3>
+										<?php endif; ?>		
 										<?php if( $content ): ?>								
-			
-									    <?php echo $content;?>
-									<?php endif;?>
+									    	<?php echo $content;?>
+									    <?php else: ?>
+											<div class="slide-text"></div>
+										<?php endif;?>
 									</div>
-								<?php endwhile; ?>
-							</div>
-							<!--SLIDE NATIGATION MENU-->
+									<?php endwhile; ?>	
+								</div>
+<!--SLIDE NATIGATION MENU-->
 							<div class="button-wrap col-md-2">
 								 <?php  
 								 $length = count($menu);
@@ -70,20 +88,25 @@ Template Name: Big Page
 							</div>
 							<!--END SLIDE MENU-->
 						</div>
-					<?php endif; ?>
-					<!--SUB PAGES MENU-->
-					<div class="cell-topics">
-						<ul>
-						    <?php				
-						    $post_id = get_the_ID();
-						    $ancestor_id = get_ancestors($post_id,'page', 'post_type')[0];
-						    wp_list_pages( array(
-						        'title_li'    => '',
-						        'child_of'    => $ancestor_id,
-						    ) );
-						    ?>
-						</ul>
-					</div>	
+						
+						<?php endif; ?>		
+						<!--SUB PAGES MENU-->
+						<?php if( have_rows('histo_slide')) {
+//								echo '<div class="cell-topics">';
+									 getPrevNext(); 
+							} else {
+								echo '<div class="cell-topics-list"><ul>';
+									$post_id = get_the_ID();
+									$ancestor_id = get_ancestors($post_id,'page', 'post_type')[0];
+									wp_list_pages( array(
+									'title_li'    => '',
+									'child_of'    => $ancestor_id,
+									'post_status' => 'publish'
+									) );
+								echo '</ul>';
+						} ?>										
+
+						<!--</div>-->
 
 						</section> <!-- end article section -->
 						
